@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Gather Notification",
   "version": "1.0.0",
 
@@ -13,10 +13,22 @@
   "homepage_url": "https://github.com/Monchi/gather-notification-extension",
   "short_name": "Gather Notification",
 
-  "permissions": ["activeTab", "notifications", "https://app.gather.town/*"],
-  "web_accessible_resources": ["js/runtime.bundle.js"],
+  "permissions": ["activeTab", "notifications"],
+  "host_permissions": ["https://app.gather.town/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/runtime.bundle.js"],
+      "matches": ["https://app.gather.town/*"],
+      "extension_ids": [
+        "adneeofhjneljcfhkcnpjpmgafafifbb",
+        "gajddopnomidpenggadfajfcgkadcncd"
+      ]
+    }
+  ],
 
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
 
   "__chrome|firefox__author": "Yuku Kotani",
   "__opera__developer": {
@@ -32,7 +44,7 @@
   "__chrome__minimum_chrome_version": "49",
   "__opera__minimum_opera_version": "36",
 
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "assets/icons/favicon.png",
