@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Sample WebExtension",
-  "version": "0.0.0",
+  "name": "Gather Notification",
+  "version": "1.0.0",
 
   "icons": {
     "16": "assets/icons/favicon.png",
@@ -9,23 +9,18 @@
     "48": "assets/icons/favicon.png",
     "128": "assets/icons/favicon.png"
   },
-  "description": "Sample description",
-  "homepage_url": "https://github.com/abhijithvijayan/web-extension-starter",
-  "short_name": "Sample Name",
+  "description": "Web extension to show browser notification on gather events such as receiving chats",
+  "homepage_url": "https://github.com/Monchi/gather-notification-extension",
+  "short_name": "Gather Notification",
 
-  "permissions": [
-    "activeTab",
-    "storage",
-    "notifications",
-    "https://app.gather.town/*"
-  ],
+  "permissions": ["activeTab", "notifications", "https://app.gather.town/*"],
   "web_accessible_resources": ["js/runtime.bundle.js"],
 
   "content_security_policy": "script-src 'self'; object-src 'self'",
 
-  "__chrome|firefox__author": "abhijithvijayan",
+  "__chrome|firefox__author": "Yuku Kotani",
   "__opera__developer": {
-    "name": "abhijithvijayan"
+    "name": "Yuku Kotani"
   },
 
   "__firefox__applications": {
@@ -48,18 +43,6 @@
     "default_title": "tiny title",
     "__chrome|opera__chrome_style": false,
     "__firefox__browser_style": false
-  },
-
-  "__chrome|opera__options_page": "options.html",
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true,
-    "__chrome__chrome_style": false
-  },
-
-  "background": {
-    "scripts": ["js/background.bundle.js"],
-    "__chrome|opera__persistent": false
   },
 
   "content_scripts": [

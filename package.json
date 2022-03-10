@@ -1,7 +1,7 @@
 {
   "name": "gather-notification-extension",
   "version": "1.0.0",
-  "description": "Web extension to show browser notification on gather events",
+  "description": "Web extension to show browser notification on gather events such as receiving chats",
   "repository": "https://github.com/Monchi/gather-notification-extension.git",
   "author": "Yuku Kotani",
   "license": "MIT",
