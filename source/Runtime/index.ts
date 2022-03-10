@@ -2,7 +2,10 @@ declare global {
   interface Window {
     // Inject by gather app
     game: {
-      subscribeToEvent: () => void;
+      subscribeToEvent: (
+        eventName: "playerChats",
+        listener: (event: ChatEvent, game: unknown) => void
+      ) => void;
     };
   }
 }
@@ -33,18 +36,19 @@ const job = setInterval(async () => {
     clearInterval(job);
     const permission = await Notification.requestPermission();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    window.game.subscribeToEvent("playerChats", async (a: ChatEvent, b, c) => {
-      if (permission === "granted") {
-        if (!hasFocus) {
-          new Notification(`[Gather] ${a.playerChats.senderName}: `, {
-            body: a.playerChats.contents,
-          });
+    window.game.subscribeToEvent(
+      "playerChats",
+      async (event: ChatEvent, game) => {
+        if (permission === "granted") {
+          if (!hasFocus) {
+            new Notification(`[Gather] ${event.playerChats.senderName}: `, {
+              body: event.playerChats.contents,
+            });
+          }
         }
+        console.log("eventchat", event, game);
       }
-      console.log("eventchat", a, b, c, permission);
-    });
+    );
   }
 }, 500);
 
