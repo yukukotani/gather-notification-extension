@@ -45,8 +45,15 @@ const job = setInterval(async () => {
       async (event: ChatEvent, game) => {
         if (permission === "granted") {
           if (!hasFocus) {
-            new Notification(`[Gather] ${event.playerChats.senderName}: `, {
-              body: event.playerChats.contents,
+            const notification = new Notification(
+              `[Gather] ${event.playerChats.senderName}: `,
+              {
+                body: event.playerChats.contents,
+              }
+            );
+
+            notification.addEventListener("click", () => {
+              window.focus();
             });
           }
         }
