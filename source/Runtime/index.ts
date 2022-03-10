@@ -7,18 +7,31 @@ declare global {
   }
 }
 
+type ChatEvent = {
+  playerChats: {
+    contents: string;
+    recipient: "GLOBAL_CHAT" | "LOCAL_CHAT" | "DM";
+    senderId: string;
+    senderName: string;
+  };
+};
+
 console.log("Runtime Loaded");
-const job = setInterval(() => {
+const job = setInterval(async () => {
   if (typeof window.game !== "undefined") {
     clearInterval(job);
-    // eslint-disable-next-line no-undef
-    console.log("game", window.game);
+    const permission = await Notification.requestPermission();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    window.game.subscribeToEvent("playerChats", (a, b, c) =>
-      console.log("eventchat", a, b, c)
-    );
+    window.game.subscribeToEvent("playerChats", (a: ChatEvent, b, c) => {
+      if (permission === "granted") {
+        new Notification(`[Gather] ${a.playerChats.senderName}: `, {
+          body: a.playerChats.contents,
+        });
+      }
+      console.log("eventchat", a, b, c, permission);
+    });
   }
 }, 500);
 
