@@ -1,6 +1,3 @@
-/* eslint-disable node/no-unpublished-require */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const path = require("path");
 const webpack = require("webpack");
 const FilemanagerPlugin = require("filemanager-webpack-plugin");
