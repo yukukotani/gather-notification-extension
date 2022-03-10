@@ -16,7 +16,18 @@ type ChatEvent = {
   };
 };
 
+let hasFocus = true;
+
 console.log("Runtime Loaded");
+
+window.addEventListener("focus", () => {
+  hasFocus = true;
+});
+
+window.addEventListener("blur", () => {
+  hasFocus = false;
+});
+
 const job = setInterval(async () => {
   if (typeof window.game !== "undefined") {
     clearInterval(job);
@@ -24,11 +35,13 @@ const job = setInterval(async () => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    window.game.subscribeToEvent("playerChats", (a: ChatEvent, b, c) => {
+    window.game.subscribeToEvent("playerChats", async (a: ChatEvent, b, c) => {
       if (permission === "granted") {
-        new Notification(`[Gather] ${a.playerChats.senderName}: `, {
-          body: a.playerChats.contents,
-        });
+        if (!hasFocus) {
+          new Notification(`[Gather] ${a.playerChats.senderName}: `, {
+            body: a.playerChats.contents,
+          });
+        }
       }
       console.log("eventchat", a, b, c, permission);
     });
