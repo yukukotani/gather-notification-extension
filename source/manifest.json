@@ -13,7 +13,7 @@
   "homepage_url": "https://github.com/Monchi/gather-notification-extension",
   "short_name": "Gather Notification",
 
-  "permissions": ["activeTab", "notifications"],
+  "permissions": [],
   "host_permissions": ["https://app.gather.town/*"],
   "web_accessible_resources": [
     {
