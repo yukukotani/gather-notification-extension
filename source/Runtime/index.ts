@@ -2,13 +2,17 @@ declare global {
   interface Window {
     // Inject by gather app
     game: {
-      subscribeToEvent: (
-        eventName: "playerChats",
-        listener: (event: ChatEvent, game: unknown) => void
+      subscribeToEvent: <EventName extends keyof EventListeners>(
+        eventName: EventName,
+        listener: EventListeners[EventName]
       ) => void;
     };
   }
 }
+
+type EventListeners = {
+  playerChats: (event: ChatEvent, game: unknown) => void;
+};
 
 type ChatEvent = {
   playerChats: {
