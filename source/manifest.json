@@ -14,7 +14,7 @@
   "short_name": "Gather Notification",
 
   "permissions": [],
-  "host_permissions": ["https://app.gather.town/*"],
+  "host_permissions": [],
   "web_accessible_resources": [
     {
       "resources": ["js/runtime.bundle.js"],
