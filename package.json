@@ -1,7 +1,7 @@
 {
   "name": "gather-notification-extension",
   "version": "1.0.1",
-  "description": "Web extension to show browser notification on events in gather.town such as receiving chats or being ringed",
+  "description": "Web extension to show browser notification on events in gather.town such as receiving chats or being ringed.",
   "repository": "https://github.com/Monchi/gather-notification-extension.git",
   "author": "Yuku Kotani",
   "license": "MIT",
