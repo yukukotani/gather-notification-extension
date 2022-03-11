@@ -9,7 +9,7 @@
     "48": "assets/icons/favicon.png",
     "128": "assets/icons/favicon.png"
   },
-  "description": "Web extension to show browser notification on gather events such as receiving chats",
+  "description": "Web extension to show browser notification on events in gather.town such as receiving chats or being ringed",
   "homepage_url": "https://github.com/Monchi/gather-notification-extension",
   "short_name": "Gather Notification",
 
