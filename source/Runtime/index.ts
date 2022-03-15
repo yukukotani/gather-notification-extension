@@ -12,6 +12,10 @@ declare global {
 
 type EventListeners = {
   playerChats: (event: ChatEvent, game: unknown) => void;
+  playerRequestsToLead: (
+    event: RequestsToLeadEvent,
+    player: EventPlayer
+  ) => void;
 };
 
 type ChatEvent = {
@@ -20,6 +24,21 @@ type ChatEvent = {
     recipient: "GLOBAL_CHAT" | "LOCAL_CHAT" | "DM";
     senderId: string;
     senderName: string;
+  };
+};
+type RequestsToLeadEvent = {
+  playerRequestsToLead: {
+    encId: number;
+    snapshot: string;
+  };
+};
+type EventPlayer = {
+  player: {
+    name: string;
+    busy: boolean;
+    map: string;
+    emojiStatus: string;
+    textStatus: string;
   };
 };
 
@@ -40,9 +59,11 @@ const job = setInterval(async () => {
     clearInterval(job);
     const permission = await Notification.requestPermission();
 
+    console.log("[Notification Extension]", window.game);
     window.game.subscribeToEvent(
       "playerChats",
       async (event: ChatEvent, game) => {
+        console.log("eventchat", event, game);
         if (permission === "granted") {
           if (!hasFocus) {
             const notification = new Notification(
@@ -57,7 +78,27 @@ const job = setInterval(async () => {
             });
           }
         }
-        console.log("eventchat", event, game);
+      }
+    );
+
+    window.game.subscribeToEvent(
+      "playerRequestsToLead",
+      async (event, player) => {
+        console.log("playerRequestsToLead", event, player);
+        if (permission === "granted") {
+          if (!hasFocus) {
+            const notification = new Notification(
+              `[Gather] Request to follow`,
+              {
+                body: `${player.player.name} would like to lead you`,
+              }
+            );
+
+            notification.addEventListener("click", () => {
+              window.focus();
+            });
+          }
+        }
       }
     );
   }
