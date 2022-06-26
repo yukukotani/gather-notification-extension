@@ -42,9 +42,13 @@ type EventPlayer = {
   };
 };
 
+function log(...messages: unknown[]) {
+  console.info("[Gather Notification]", ...messages);
+}
+
 let hasFocus = true;
 
-console.log("Runtime Loaded");
+log("Runtime Loaded");
 
 window.addEventListener("focus", () => {
   hasFocus = true;
@@ -59,32 +63,47 @@ const job = setInterval(async () => {
     clearInterval(job);
     const permission = await Notification.requestPermission();
 
-    console.log("[Notification Extension]", window.game);
-    window.game.subscribeToEvent(
-      "playerChats",
-      async (event: ChatEvent, game) => {
-        console.log("eventchat", event, game);
-        if (permission === "granted") {
-          if (!hasFocus) {
-            const notification = new Notification(
-              `[Gather] ${event.playerChats.senderName}: `,
-              {
-                body: event.playerChats.contents,
-              }
-            );
+    log("Initializing event handlers", window.game);
+    window.game.subscribeToEvent("playerChats", async (event: ChatEvent) => {
+      log(
+        "playerChats event",
+        "event:",
+        event,
+        "hasFocus:",
+        hasFocus,
+        "permission:",
+        permission
+      );
+      if (permission === "granted") {
+        if (!hasFocus) {
+          const notification = new Notification(
+            `[Gather] ${event.playerChats.senderName}: `,
+            {
+              body: event.playerChats.contents,
+            }
+          );
 
-            notification.addEventListener("click", () => {
-              window.focus();
-            });
-          }
+          notification.addEventListener("click", () => {
+            window.focus();
+          });
         }
       }
-    );
+    });
 
     window.game.subscribeToEvent(
       "playerRequestsToLead",
       async (event, player) => {
-        console.log("playerRequestsToLead", event, player);
+        log(
+          "playerRequestsToLead event",
+          "event:",
+          event,
+          "hasFocus:",
+          hasFocus,
+          "permission:",
+          permission,
+          "player:",
+          player
+        );
         if (permission === "granted") {
           if (!hasFocus) {
             const notification = new Notification(
